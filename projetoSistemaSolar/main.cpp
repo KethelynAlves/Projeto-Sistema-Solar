@@ -1,7 +1,7 @@
 #include <GL/glut.h>
 
 // Variáveis globais para controlar a animação
-float anguloBola = 0.0f;
+float tempoDecorrido = 0.0f;
 GLfloat luzBranca[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 GLfloat luzAmbiente[] = {0.2f, 0.2f, 0.2f, 1.0f};
 
@@ -34,40 +34,41 @@ void display() {
         0.0, 1.0, 0.0);
     luz();
     
+    float velocidadeBola = 110.0f;
     
 	//sol    
     glPushMatrix();       
-        glRotatef(anguloBola*0.5f, 0.0f, 1.0f, 0.0f);      
+        glRotatef(tempoDecorrido*velocidadeBola*0.5f, 0.0f, 1.0f, 0.0f);      
         glColor3f(1.0f, 0.5f, 0.0f);                
         glutSolidSphere(0.5, 36, 36); // mudar para glutSolidSphere deixar completo    
     glPopMatrix();
 
     //mercurio        
     glPushMatrix();        
-        glRotatef(anguloBola*1.5f, 0.0f, 1.0f, 0.0f); //angulo*velocidade              
+        glRotatef(tempoDecorrido*velocidadeBola*1.5f, 0.0f, 1.0f, 0.0f); //angulo*velocidade              
         glTranslatef(1.0f, 0.0f, 0.0f);       //o primeiro parametro é a distancia do centro(sol) 
-        glColor3f(1.0f, 0.0f, 0.0f);        
+        glColor3f(1.0f, 0.6f, 0.5f);        
         glutSolidSphere(0.1, 36, 36);    //primeiro parametro é o tamanho da esfera
     glPopMatrix();   
     
     //venus    
     glPushMatrix();
-        glRotatef(anguloBola*1.0, 0.0f, 1.0f, 0.0f); 
+        glRotatef(tempoDecorrido*velocidadeBola*1.0f, 0.0f, 1.0f, 0.0f); 
         glTranslatef(1.5f, 0.0f, 0.0f);
-        glColor3f(1.0f, 1.0f, 0.1f);
+        glColor3f(1.0f, 0.3f, 0.0f); 
         glutSolidSphere(0.2, 36, 36);
     glPopMatrix();
 
     //terra        
     glPushMatrix();       
-        glRotatef(anguloBola*0.8f, 0.0f, 1.0f, 0.0f);         
+        glRotatef(tempoDecorrido*velocidadeBola*0.8f, 0.0f, 1.0f, 0.0f);         
         glTranslatef(2.5f, 0.0f, 0.0f);                
         glColor3f(0.0f, 0.0f, 1.0f);                
         glutSolidSphere(0.3, 36, 36);
         
         //lua
         glPushMatrix();
-            glRotatef(anguloBola, 0.0f, 1.0f, 0.0f);         
+            glRotatef(tempoDecorrido*velocidadeBola, 0.0f, 1.0f, 0.0f);         
             glTranslatef(0.5f, 0.0f, 0.0f);                
             glColor3f(1.0f, 1.0f, 1.0f);                
             glutSolidSphere(0.05, 36, 36);
@@ -76,9 +77,9 @@ void display() {
 
     //marte        
     glPushMatrix();        
-        glRotatef(anguloBola*0.5f, 0.0f, 1.0f, 0.0f);      
+        glRotatef(tempoDecorrido*velocidadeBola*0.5f, 0.0f, 1.0f, 0.0f);      
         glTranslatef(3.5f, 0.0f, 0.0f);
-        glColor3f(1.0f, 0.0f, 0.3f);                
+        glColor3f(1.0f, 0.0f, 0.0f);                
         glutSolidSphere(0.4, 36, 36);    
     glPopMatrix();
 
@@ -104,7 +105,7 @@ void inicializa() {
 
 
 void atualizaAnimacao(int valor) {
-    anguloBola += 2.0f;
+    tempoDecorrido = glutGet(GLUT_ELAPSED_TIME)/1000.0f;
 
     glutPostRedisplay();
 
@@ -124,7 +125,7 @@ int main(int argc, char** argv) {
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
     
-    glutTimerFunc(25, atualizaAnimacao, 0);
+    glutTimerFunc(16, atualizaAnimacao, 0);
     
     glutMainLoop();
     
