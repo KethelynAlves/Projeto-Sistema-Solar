@@ -6,14 +6,12 @@ float tempoDecorrido = 0.0f;
 GLfloat luzBranca[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 GLfloat luzAmbiente[] = {0.2f, 0.2f, 0.2f, 1.0f};
 
-
 void luz() {
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, luzAmbiente);
     
     //ambiente
     glEnable(GL_LIGHT0);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, luzBranca);
-
 
     GLfloat posicaoLuz[] = { 0.0f, 0.0f, 0.0f, 1.0f };
     glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz);    
@@ -25,7 +23,6 @@ void luz() {
     GLfloat posicaoLuz1[] = { 0.0f, 1.0f, 3.0f, 1.0f };
     glLightfv(GL_LIGHT1, GL_POSITION, posicaoLuz1);
 }
-
 
 void desenhaOrbita(float raio) {
     glDisable(GL_LIGHTING);
@@ -53,13 +50,12 @@ void display() {
     
     float distaciaBola[] ={1.0f, 1.7f, 2.7f, 3.7f}; //mercurio, venus, terra, marte
 
-
     desenhaOrbita(distaciaBola[0]);
     desenhaOrbita(distaciaBola[1]);
     desenhaOrbita(distaciaBola[2]);
     desenhaOrbita(distaciaBola[3]);
         
-    
+
 	//sol    
     glPushMatrix();       
         glRotatef(tempoDecorrido*velocidadeBola*0.5f, 0.0f, 1.0f, 0.0f);      
@@ -124,12 +120,8 @@ void display() {
         glutSolidSphere(0.16, 36, 36);    
     glPopMatrix();
 
-
-
     glutSwapBuffers();
 }
-
-
 
 void reshape(int w, int h) {
     glViewport(0, 0, w, h);
@@ -149,13 +141,18 @@ void inicializa() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-
 void atualizaAnimacao(int valor) {
     tempoDecorrido = glutGet(GLUT_ELAPSED_TIME)/1000.0f;
 
     glutPostRedisplay();
 
     glutTimerFunc(16, atualizaAnimacao, 0);
+}
+
+void tecladoNormal(unsigned char key, int x, int y) {
+    if (key == 27) { 
+        exit(0);
+    }
 }
 
 int main(int argc, char** argv) {
@@ -170,6 +167,8 @@ int main(int argc, char** argv) {
 
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
+
+    glutKeyboardFunc(tecladoNormal);
     
     glutTimerFunc(16, atualizaAnimacao, 0);
     
