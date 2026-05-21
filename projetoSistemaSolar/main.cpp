@@ -167,7 +167,15 @@ void mousePrensado(int butao, int estado, int x, int y){
             ratoPrensado = false;
         }
     }
+    if (butao == 3) {
+        posZ -= 0.1f;
+    }
+    if (butao == 4) {
+        posZ += 0.1f;
+    }
+    glutPostRedisplay();
 }
+
 
 void gerenciaMovimentoMouse(int x, int y){    
     if(!ratoPrensado) return;
@@ -262,7 +270,7 @@ void tecladoNormal(unsigned char key, int x, int y) {
 void inicializa() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
-    glEnable(GL_COLOR_MATERIAL);
+    glDisable(GL_COLOR_MATERIAL);
     glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 
     glEnable(GL_TEXTURE_2D);
